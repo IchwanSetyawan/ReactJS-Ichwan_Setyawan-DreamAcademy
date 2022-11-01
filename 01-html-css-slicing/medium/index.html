@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Medium</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400&display=swap"
+      rel="stylesheet"
+    />
+
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css"
+      integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <link rel="stylesheet" href="styles.css" />
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"
+      integrity="sha512-ElRFoEQdI5Ht6kZvyzXhYG9NqjtkmlkfYk0wr6wHxU9JEHakS7UJZNeml5ALk+8IKlU6jDgMabC3vkumRokgJA=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    ></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+  </head>
+  <body>
+    <div>
+      <div class="flex">
+        <div class="w-3/12 p-8 bg-slate-100 relative">
+          <div class="font-semibold text-xl">
+            <p
+              class="inline-block rounded-full bg-orange-500 text-white px-2 mr-2"
+            >
+              e
+            </p>
+            <span>Elearning</span>
+
+            <div>
+              <ul class="mt-4 rounded-2xl py-4">
+                <li
+                  class="flex align-middle py-4 px-4 hover:bg-slate-50 rounded-2xl hover:shadow-sm"
+                >
+                  <i class="fa-solid fa-house fa-xs mt-1 mr-2"></i>
+                  <span class="text-xs font-normal">Dashboard</span>
+                </li>
+                <li
+                  class="flex align-middle py-4 px-4 hover:bg-slate-50 rounded-2xl hover:shadow-sm"
+                >
+                  <i class="fa-solid fa-magnifying-glass mt-2 fa-xs mr-2"></i>
+                  <span class="text-xs font-normal">My Class</span>
+                </li>
+                <li
+                  class="flex align-middle py-4 px-4 hover:bg-slate-50 rounded-2xl hover:shadow-sm"
+                >
+                  <i class="fa-solid fa-person-chalkboard mr-2 mt-2 fa-xs"></i>
+                  <span class="text-xs font-normal">Instructors</span>
+                </li>
+                <li
+                  class="flex align-middle py-4 px-4 hover:bg-slate-50 rounded-2xl hover:shadow-sm"
+                >
+                  <i class="fa-solid fa-comment mr-2 mt-2 fa-xs"></i>
+                  <span class="text-xs font-normal">Group Chat</span>
+                </li>
+                <li
+                  class="flex align-middle py-4 px-4 hover:bg-slate-50 rounded-2xl hover:shadow-sm"
+                >
+                  <i class="fa-solid fa-gear mr-2 mt-2 fa-xs"></i>
+                  <span class="text-xs font-normal">Settings</span>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="relative w-10/12 mt-80">
+            <img
+              src="../medium/img/iluskiri.png"
+              class="absolute z-10 -mt-14"
+            />
+            <div class="bg-orange-400 h-52 mt-10 rounded-2xl mx-auto relative">
+              <button
+                class="bg-white rounded-lg justify-content px-3 py-1 text-xs font-semibold shadow-orange-300 mt-40 absolute ml-14"
+              >
+                Join Course
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <div class="bg-white w-10/12 h-screen p-8">
+          <div class="flex justify-between">
+            <div>
+              <input
+                type="text"
+                placeholder="search for query"
+                class="px-3 py-2 text-sm bg-slate-200 rounded-xl w-full"
+              />
+              <i class="fa-solid fa-magnifying-glass absolute mt-3 -ml-8"></i>
+            </div>
+
+            <div class="flex align-middle">
+              <div>
+                <i class="fa-regular fa-envelope mx-4 mt-5 inline-block"></i>
+                <div
+                  class="p-1 bg-red-500 rounded-full absolute -mt-6 ml-7 w-1"
+                ></div>
+              </div>
+              <div>
+                <i class="fa-regular fa-bell mx-4 mt-5 inline-block"></i>
+                <div
+                  class="p-1 bg-red-500 rounded-full absolute -mt-6 ml-6 w-1"
+                ></div>
+              </div>
+              <div class="flex align-middle hover:shadow-md rounded-md p-1">
+                <img
+                  src="../medium/img/people12.png"
+                  class="h-12 mr-2 rounded-full"
+                  alt=""
+                />
+                <div>
+                  <p class="font-semibold mt-1 text-sm">Madhu</p>
+                  <small class="text-xs -mt-1 block">@madumanis</small>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="my-2 mt-16">
+            <p class="font-semibold text-xl">Analitics Overview</p>
+          </div>
+          <div>
+            <div class="bg-banner p-12 rounded-2xl flex">
+              <div class="w-8/12">
+                <h1 class="font-medium text-2xl text-white my-2">
+                  Learn With Effecttivecally With Us!
+                </h1>
+                <p class="text-white">get 30% of every course on january</p>
+
+                <div class="flex mt-16">
+                  <div class="flex align-middle rounded-md p-1 mr-8">
+                    <i
+                      class="fa-solid fa-graduation-cap inline-block p-4 text-white border-white border-2 mr-2 bg-pink-600 rounded-full"
+                    ></i>
+
+                    <div>
+                      <p class="font-medium mt-1 text-sm text-white">
+                        Students
+                      </p>
+                      <small class="text-xs block text-white">65,000+</small>
+                    </div>
+                  </div>
+                  <div class="flex align-middle rounded-md p-1">
+                    <i
+                      class="fa-solid fa-chalkboard-user p-4 bg-yellow-600 rounded-full mr-2 border-white text-white border-2"
+                    ></i>
+                    <div>
+                      <p class="font-medium mt-1 text-sm text-white">
+                        Expert Mentors
+                      </p>
+                      <small class="text-xs block text-white">250+</small>
+                    </div>
+                  </div>
+                  <div>
+                    <img
+                      src="../medium/img/undraw_happy_announcement_re_tsm0 1.png"
+                      alt="img"
+                      class="absolute img-banner ml-36 h-96"
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="flex mt-8 mb-4">
+            <div class="w-4/12 pr-4 my-2">
+              <div class="flex justify-between">
+                <p class="font-semibold text-lg">Popular Course</p>
+                <span>all course</span>
+              </div>
+              <div class="p-2 bg-slate-100 rounded-2xl pt-4">
+                <div
+                  class="bg-white shadow-md rounded-lg p-2 flex justify-between"
+                >
+                  <div class="flex">
+                    <p
+                      class="font-bold py-3 px-3 text-white bg-yellow-400 rounded-lg mr-2"
+                    >
+                      U
+                    </p>
+                    <div>
+                      <p class="font-semibold text-sm">UI/UX Design</p>
+                      <span class="text-xs text-slate-400">30 Course</span>
+                    </div>
+                  </div>
+                  <div class="hover:cursor-pointer">
+                    <span
+                      class="p-1 bg-orange-200 hover:bg-yellow-400 text-xs rounded-md mr-2"
+                      >view course</span
+                    >
+                    <i
+                      class="fa-solid fa-ellipsis-vertical text-gray-300 mt-4"
+                    ></i>
+                  </div>
+                </div>
+                <div
+                  class="bg-white shadow-md rounded-lg my-4 p-2 flex justify-between"
+                >
+                  <div class="flex">
+                    <span
+                      class="font-bold py-3 px-3 text-white bg-orange-400 rounded-lg mr-2"
+                    >
+                      M
+                    </span>
+                    <div>
+                      <p class="font-semibold text-sm">Marketing</p>
+                      <span class="text-xs text-slate-400">25+ Course</span>
+                    </div>
+                  </div>
+                  <div class="hover:cursor-pointer">
+                    <span
+                      class="p-1 bg-orange-200 hover:bg-orange-400 text-xs rounded-md mr-2"
+                      >view course</span
+                    >
+                    <i
+                      class="fa-solid fa-ellipsis-vertical text-gray-300 mt-4"
+                    ></i>
+                  </div>
+                </div>
+                <div
+                  class="bg-white shadow-md rounded-lg my-4 p-2 flex justify-between"
+                >
+                  <div class="flex hover:cursor-pointer">
+                    <p
+                      class="font-bold py-3 px-3 text-white bg-blue-400 rounded-lg mr-2"
+                    >
+                      W
+                    </p>
+                    <div class="">
+                      <p class="font-semibold text-sm">Web Development</p>
+                      <span class="text-xs text-slate-400">30 Course</span>
+                    </div>
+                  </div>
+                  <div class="hover:cursor-pointer">
+                    <span
+                      class="p-1 bg-orange-200 hover:bg-blue-400 text-xs rounded-md mr-2"
+                      >view course</span
+                    >
+                    <i
+                      class="fa-solid fa-ellipsis-vertical text-gray-300 mt-4"
+                    ></i>
+                  </div>
+                </div>
+                <div
+                  class="bg-white shadow-md rounded-lg mt-4 mb-2 p-2 flex justify-between"
+                >
+                  <div class="flex">
+                    <p
+                      class="font-bold py-3 px-3 text-white bg-green-400 rounded-lg mr-2"
+                    >
+                      M
+                    </p>
+                    <div>
+                      <p class="font-semibold text-sm">Mathematics</p>
+                      <span class="text-xs text-slate-400">30 Course</span>
+                    </div>
+                  </div>
+                  <div class="hover:cursor-pointer">
+                    <span
+                      class="p-1 bg-orange-200 hover:bg-green-400 text-xs rounded-md mr-2"
+                      >view course</span
+                    >
+                    <i
+                      class="fa-solid fa-ellipsis-vertical text-gray-300 mt-4"
+                    ></i>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="w-4/12 my-2 pr-4">
+              <div>
+                <p class="font-semibold">Current Activity</p>
+              </div>
+              <div class="grid grid-cols-2 gap-4 my-2">
+                <div class="bg-green-100 col-span-2 p-4 rounded-2xl">
+                  <canvas id="myChart" height="150"></canvas>
+                </div>
+                <div class="bg-yellow-500 p-4 rounded-2xl">
+                  <div>
+                    <p class="font-semibold text-2xl text-white">45K+</p>
+                    <small class="text-white text-xs">Completed Course</small>
+                    <div class="flex justify-between align-middle mt-6">
+                      <i
+                        class="fa-solid fa-align-left text-white mt-4 fa-2xl"
+                      ></i>
+                      <i
+                        class="fa-solid fa-microphone block py-2 px-3 text-yellow-500 bg-white rounded-full"
+                      ></i>
+                    </div>
+                  </div>
+                </div>
+                <div class="bg-orange-500 p-4 rounded-2xl">
+                  <div>
+                    <p class="font-semibold text-2xl text-white">20K+</p>
+                    <small class="text-white text-xs">Video Course</small>
+                    <div class="flex justify-between align-middle mt-6">
+                      <i
+                        class="fa-solid fa-align-left text-white mt-4 fa-2xl"
+                      ></i>
+                      <i
+                        class="fa-solid fa-play block py-2 px-3 text-orange-300 bg-white rounded-full"
+                      ></i>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="w-4/12 my-2">
+              <div class="flex justify-between">
+                <p class="font-semibold text-lg">Best Instructors</p>
+                <span class="underline">See all</span>
+              </div>
+              <div class="p-2 bg-slate-100 rounded-2xl pt-4">
+                <div class="bg-slate-100 shadow-md rounded-xl">
+                  <div
+                    class="bg-white shadow-md rounded-lg p-1 flex justify-between"
+                  >
+                    <div class="flex">
+                      <img
+                        src="../medium/img/people4.png"
+                        alt="img"
+                        class="rounded-full h-14 p-1 mr-1"
+                      />
+                      <div class="mt-2">
+                        <p class="font-semibold text-sm">Putri</p>
+                        <span class="text-xs text-slate-400"
+                          >5 Design 30 Course</span
+                        >
+                      </div>
+                    </div>
+                    <div>
+                      <span
+                        class="p-1 bg-slate-200 mt-4 block hover:bg-orange-400 hover:text-white cursor-pointer text-xs rounded-md mr-2"
+                        >view course</span
+                      >
+                    </div>
+                  </div>
+                </div>
+                <div class="bg-slate-100 shadow-md my-4 rounded-xl">
+                  <div
+                    class="bg-white shadow-md rounded-lg p-1 flex justify-between"
+                  >
+                    <div class="flex">
+                      <img
+                        src="../medium/img/people1.png"
+                        alt="img"
+                        class="rounded-full h-14 p-1 mr-1"
+                      />
+                      <div class="mt-2">
+                        <p class="font-semibold text-sm">Marcelo</p>
+                        <span class="text-xs text-slate-400"
+                          >5 design 30 Course</span
+                        >
+                      </div>
+                    </div>
+                    <div>
+                      <span
+                        class="p-1 bg-slate-200 mt-4 block hover:bg-orange-400 hover:text-white cursor-pointer text-xs rounded-md mr-2"
+                        >view course</span
+                      >
+                    </div>
+                  </div>
+                </div>
+                <div class="bg-slate-100 shadow-md my-4 rounded-xl">
+                  <div
+                    class="bg-white shadow-md rounded-lg p-1 flex justify-between"
+                  >
+                    <div class="flex">
+                      <img
+                        src="../medium/img/people7.png"
+                        alt="img"
+                        class="rounded-full h-14 p-1 mr-1"
+                      />
+                      <div class="mt-2">
+                        <p class="font-semibold text-sm">Tomi</p>
+                        <span class="text-xs text-slate-400"
+                          >5 Design 30 Course</span
+                        >
+                      </div>
+                    </div>
+                    <div>
+                      <span
+                        class="p-1 bg-slate-200 mt-4 block hover:bg-orange-400 hover:text-white cursor-pointer text-xs rounded-md mr-2"
+                        >view course</span
+                      >
+                    </div>
+                  </div>
+                </div>
+
+                <div class="bg-slate-100 shadow-md mt-4 mb-1 rounded-xl">
+                  <div
+                    class="bg-white shadow-md rounded-lg p-1 flex justify-between"
+                  >
+                    <div class="flex">
+                      <img
+                        src="../medium/img/people8.png"
+                        alt="img"
+                        class="rounded-full h-14 p-1 mr-1"
+                      />
+                      <div class="mt-2">
+                        <p class="font-semibold text-sm">Sarah</p>
+                        <span class="text-xs text-slate-400"
+                          >5 Design 30 Course</span
+                        >
+                      </div>
+                    </div>
+                    <div>
+                      <span
+                        class="p-1 bg-slate-200 mt-4 block hover:bg-orange-400 hover:text-white cursor-pointer text-xs rounded-md mr-2"
+                        >view course</span
+                      >
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
+
+<script>
+  const ctx = document.getElementById("myChart").getContext("2d");
+  const myChart = new Chart(ctx, {
+    type: "line",
+    data: {
+      labels: ["Red", "Blue", "Yellow", "Green", "Purple", "Orange"],
+      datasets: [
+        {
+          label: "My Progress",
+          data: [1, 6, 3, 5, 2, 3],
+          backgroundColor: [
+            "rgba(255, 99, 132, 0.2)",
+            "rgba(54, 162, 235, 0.2)",
+            "rgba(255, 206, 86, 0.2)",
+            "rgba(75, 192, 192, 0.2)",
+            "rgba(153, 102, 255, 0.2)",
+            "rgba(255, 159, 64, 0.2)",
+          ],
+          borderColor: [
+            "rgba(255, 99, 132, 1)",
+            "rgba(54, 162, 235, 1)",
+            "rgba(255, 206, 86, 1)",
+            "rgba(75, 192, 192, 1)",
+            "rgba(153, 102, 255, 1)",
+            "rgba(255, 159, 64, 1)",
+          ],
+          borderWidth: 1,
+        },
+      ],
+    },
+    options: {
+      scales: {
+        y: {
+          beginAtZero: true,
+        },
+      },
+    },
+  });
+</script>
