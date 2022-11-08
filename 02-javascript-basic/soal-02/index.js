@@ -3,31 +3,22 @@
 function faktorial(value) {
   var result = 1;
   if (value < 0 || typeof value != "number" || value===null) {
-    //nilai tidak boleh lebih kecil dari 0 atau harus bernilai num,ber
-    result = null;
-    console.log(result);
+    //nilai tidak boleh lebih kecil dari 0 atau harus bernilai number
+    // result = null;
+    // console.log(result);
     return null;
   }
   if (typeof value === "number") {
     for (var i = 1; i <= value; i++) {
       result *= i;
     }
-    console.log(result);
+    // console.log(result);
     return result;
   }
 }
-console.log("==============================  ");
-console.log("SOAL NOMOR 2");
-console.log("==============================");
 
-faktorial(10);
-faktorial(13);
-faktorial(0);
-faktorial(-5);
-faktorial("oke");
-faktorial("10");
-faktorial("6");
-faktorial(true);
-faktorial();
+const args = [10,13,0,-5,"oke","10","6",true];
 
-console.log("==============================");
+args.forEach((item)=>{
+  console.log(faktorial(item))
+})

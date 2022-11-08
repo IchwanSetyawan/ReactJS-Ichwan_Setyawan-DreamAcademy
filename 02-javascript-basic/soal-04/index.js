@@ -2,35 +2,32 @@
 function yourAges(x = undefined) {
   let numAge = x;
   if (!numAge) {
-    return;
+    return "invalid age!";
   }
-  if (numAge <= 0 || typeof numAge != "number") {
-    console.log("invalid age!");
-    return false;
+  if (numAge < 0 || typeof numAge != "number") {
+    return "invalid age!";
   }
   if (numAge <= 17) {
-    console.log("Anda adalah seorang dibawah umur");
-    return false;
+    return "Anda adalah seorang dibawah umur";
   }
   if (numAge <= 29) {
-    console.log("Anda adalah seorang Young adult");
-    return false;
+    return "Anda adalah seorang Young adult";
   }
   if (numAge <= 60) {
-    console.log("Anda adalah seorang dewasa");
+  
+    return "Anda adalah seorang dewasa"
   }
   if (numAge > 60) {
-    console.log("Anda adalah seorang tua");
-    return false;
+   
+    return "Anda adalah seorang tua";
   }
   return numAge;
 }
-console.log("SOAL NOMOR 4");
 
-yourAges(0);
-yourAges(10)
-yourAges("50")
-yourAges(60)
-yourAges(29.5)
-yourAges("muda")
-yourAges(true)
+const args = [0,10,"50",60,29.5,"muda",true];
+
+args.forEach((item)=>{
+  console.log(yourAges(item))
+})
+
+

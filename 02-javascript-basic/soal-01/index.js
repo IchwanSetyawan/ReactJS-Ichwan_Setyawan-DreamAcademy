@@ -1,26 +1,23 @@
-//SOAL NOMOR 1
+//pure function
 function greetings(param) {
-    if (param !== undefined) {
-      if (param.length < 20) {
-        console.log(`Halo ${param}`);
-      } else if (param.length >= 20) {
-        console.log(`Yang mulia ${param}`);
-      } else {
-        console.log("maaf saya tidak bisa mengeja namanya ");
-      }
-    }
-  
-    if (param === undefined || param === "" || param === null) {
-      console.log("maaf saya tidak bisa mengeja namanya karna nama kosong ");
-      return false;
+  if (param !== undefined) {
+    if (param.length < 20) {
+      return `Halo ${param}`;
+    } else if (param.length >= 20) {
+      return `Yang mulia ${param}`;
+    } else {
+      return "maaf saya tidak bisa mengeja namanya ";
     }
   }
-  console.log("SOAL NOMOR 1");
-  console.log("==============================");
-  greetings("jokowi");
-  greetings("Sri Sultan hamengkubowono I");
-  greetings(10);
-  greetings(false);
-  greetings();
-  console.log("============================")
-  
+
+  if (param === undefined || param === "" || param === null) {
+    return "maaf saya tidak bisa mengeja namanya karna nama kosong ";
+  }
+}
+
+const args = ["jokowi", "Sri Sultan hamengkubowono I", 10, false];
+
+args.forEach((item) => {
+  console.log(greetings(item));
+});
+
