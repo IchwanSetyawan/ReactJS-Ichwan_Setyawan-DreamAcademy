@@ -1,17 +1,16 @@
 // SOAL NOMOR 3
-function randomNumber() {
-  setTimeout(function () {
-    var myNum = Math.random();
-    if (myNum > 0.9) {
-      console.log(`berhenti, angka anda ${myNum}, dan sudah mencapai atau lebih dari 0.9`);
-      return false;
-    }
-    console.log("random number -", myNum);
-    randomNumber();
-    return myNum;
-  }, 1000);
+function randomNumber(value){
+  var number = value;
+  var x = 0;
+  while(x !== number ||x <= number){
+      if(x>=number){
+          return console.log('data sudah mencapai '+number)
+      }
+    x = Math.random();
+    console.log(x);
+  }
 }
-
-console.log("SOAL NO 3");
-
-randomNumber();
+const args = [0.9]
+args.forEach((item)=>{
+  return randomNumber(item)
+})
