@@ -28,7 +28,7 @@ function add() {
   // calculate the age of the user
   const ageUser = year - 1970;
 
-  var getDiff = Math.round(birthdayIn / (1000 * 60 * 60 * 24));
+  var getDiff = Math.ceil(birthdayIn / (1000 * 60 * 60 * 24));
 
   if (getDiff < 0) {
     console.log(
@@ -54,7 +54,7 @@ function add() {
   });
 
   var mYears = mToday.diff(mBorn, "year");
-  var mDays = Math.round(mBirthday.diff(mToday, "day", true));
+  var mDays = Math.ceil(mBirthday.diff(mToday, "day", true));
 
   if (mDays < 0) {
     console.log(
