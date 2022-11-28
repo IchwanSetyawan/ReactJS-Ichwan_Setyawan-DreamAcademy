@@ -16,14 +16,20 @@ var commentBody = $('commentBody')
 var thumbnailComment = $('thumbnailComment')
 
 
-const getPost = (postId) => {
+const getPost = (postId) => { 
+  $("#content").hide();
+  $("#loading").show();
+  
   return new Promise((resolve, reject) => {
     $.ajax({
       method: "get",
       url: apiHost + "posts/" + postId,
     })
       .done(function (data) {
+        $("#loading").hide();
+        $("#content").show();
         resolve(data);
+
       })
       .fail((err) => reject(err));
   });

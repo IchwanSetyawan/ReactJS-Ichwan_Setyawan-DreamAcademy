@@ -40,35 +40,40 @@ function nextPage() {
 
 //get data
 function loadData() {
+  $("#dataTable").hide();
+  $("#loading").show();
   $.ajax({
     dataType: "json",
     url: apiHost + "posts",
     success: function (datas) {
+      $("#dataTable").show();
+       $("#loading").hide();
       var result = "";
       posts = datas;
       datas.forEach((item, idx) => {
         result += `
   
-            
-          <tr class="border border-slate-400 p-3">
-          <td class="border border-slate-400 p-3" >${idx + 1}</td>
-          <td id="${item.id}" class="goTodetail border border-slate-400 p-3" >
-            <a href="/post/?id=${item.id}">
-            ${item.title}
-            </a>
-          </td>
-          <td class="border border-slate-400 p-3">${item.author}</td>
-          <td class="border border-slate-400 p-3">${item.createdAt}</td>
-          <td id="lastModifiedDetail" class=" border border-slate-400 p-3">${item.lastModifiedAt
-          }</td>
-          <td class="border border-slate-400 p-3">${item.published}</td>
-          <td class="border border-slate-400 p-3">
-          <span id="edit-${item.id
-          }" class="listItemEdit cursor-pointer text-white text-xs bg-green-700 hover:bg-green-800 p-1 rounded-md ">Edit</span>
-          <span id="delete-${item.id
-          }" class="listDeleteBtn cursor-pointer text-white text-xs bg-red-700 hover:bg-red-800 p-1 rounded-md ">Delete</span>
-          </td>
-          </tr>
+          < id="dataTable">
+            <tr class="border border-slate-400 p-3">
+            <td class="border border-slate-400 p-3" >${idx + 1}</td>
+            <td id="${item.id}" class="goTodetail border border-slate-400 p-3" >
+              <a href="/post/?id=${item.id}">
+              ${item.title}
+              </a>
+            </td>
+            <td class="border border-slate-400 p-3">${item.author}</td>
+            <td class="border border-slate-400 p-3">${item.createdAt}</td>
+            <td id="lastModifiedDetail" class=" border border-slate-400 p-3">${item.lastModifiedAt
+            }</td>
+            <td class="border border-slate-400 p-3">${item.published}</td>
+            <td class="border border-slate-400 p-3">
+            <span id="edit-${item.id
+            }" class="listItemEdit cursor-pointer text-white text-xs bg-green-700 hover:bg-green-800 p-1 rounded-md ">Edit</span>
+            <span id="delete-${item.id
+            }" class="listDeleteBtn cursor-pointer text-white text-xs bg-red-700 hover:bg-red-800 p-1 rounded-md ">Delete</span>
+            </td>
+            </tr>
+          </>
 
 
    
