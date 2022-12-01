@@ -50,7 +50,7 @@ function getProfile() {
   return new Promise((resolve, reject) => {
     $.ajax({
       dataType: "json",
-      url: apiHost + "profile",
+      url: apiHost + "user",
     })
       .done(function (datas) {
         resolve(datas);
@@ -105,31 +105,46 @@ function getComments() {
 
 getComments().then((response)=>{
   console.log({response});
+ 
   var result = "";
-  response.forEach((item, idx)=>{
-    result +=`
-    <div class="my-4">
+  response.map((item)=>{
+    var avatar = item.userId.slice(0,2)
+    var randomColor = Math.floor(Math.random()*16777215).toString(16);
+    return result += ` <div class="my-4">
       <div class="flex gap-2 items-center">
-     
-        <span class="rounded-full flex items-center justify-center  h-14 w-14 bg-blue-900 text-white font-semibold" id="thumbnailComment">${item.author.slice(0,2)}</span>
-    
-        <div class="flex gap-2">
-            <span id="commentAuthor" class="font-bold text-xl">${item.author}</span>
-            <span id="commentAuthorTime" class="font-bold text-xl">${item.createdAt}</span>
-        </div>
+          <span class="rounded-full flex items-center justify-center  h-14 w-14 bg-[#${randomColor}] text-white font-semibold" id="thumbnailComment">${avatar}</span>
+
+      <div class="flex gap-2">
+              <span id="commentAuthor" class="font-bold text-xl">${item.userId}</span>
+              <span id="commentAuthorTime" class="font-bold text-xl">${item.createdAt}</span>
+          </div>
       </div>
-      <p id="commentBody" class="font-medium">${item.body}</p>
-    </div>
-    `
-  });
-  $("#commentUser").append(result)
+      <p id="commentBody" class="font-medium">${item.message}</p>
+    </div> `
+    // return result +=`
+    //   <div class="my-4">
+    //     <div class="flex gap-2 items-center">
+       
+    //       <span class="rounded-full flex items-center justify-center  h-14 w-14 bg-blue-900 text-white font-semibold" id="thumbnailComment">${item.author.slice(0,2)}</span>
+      
+    //       <div class="flex gap-2">
+    //           <span id="commentAuthor" class="font-bold text-xl">${item.userId}</span>
+    //           <span id="commentAuthorTime" class="font-bold text-xl">${item.createdAt}</span>
+    //       </div>
+    //     </div>
+    //     <p id="commentBody" class="font-medium">${item.message}</p>
+    //   </div>
+    //   `
+    }).join(' ');
+
+
+  $('#commentUser').append(result);
+
 }).catch((err)=>{
   console.log(err);
 })
 
 //Create Comments
-
-
 let messageComment = $('#messageComment')
 let date = new Date();
 let day = date.getDate();
@@ -148,8 +163,8 @@ $('#submitComment').click(function() {
       contentType: 'application/json',
       data: JSON.stringify({
         postId:myParam,
-        author:authorText,
-        body:messageComment.val(),
+        userId:authorText,
+        message:messageComment.val(),
         createdAt:currentDate,
       })
     }).done(function (data) {

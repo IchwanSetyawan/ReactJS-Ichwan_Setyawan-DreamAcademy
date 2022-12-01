@@ -74,9 +74,6 @@ function loadData() {
             </td>
             </tr>
           </>
-
-
-   
    `;
       });
       $("table").append(result);
