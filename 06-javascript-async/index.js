@@ -8,18 +8,19 @@ var myParam = urlParams.get("id");
 var authorId = "1";
 var authorText = "Izrail";
 
+var users;
+var avatar;
 //comment
-var commentAuthor = $('commentAuthor')
-var commentAuthorTime = $('commentAuthorTime')
-var commentAuthorDate = $('commentAuthorDate')
-var commentBody = $('commentBody')
-var thumbnailComment = $('thumbnailComment')
+var commentAuthor = $("commentAuthor");
+var commentAuthorTime = $("commentAuthorTime");
+var commentAuthorDate = $("commentAuthorDate");
+var commentBody = $("commentBody");
+var thumbnailComment = $("thumbnailComment");
 
-
-const getPost = (postId) => { 
+const getPost = (postId) => {
   $("#content").hide();
   $("#loading").show();
-  
+
   return new Promise((resolve, reject) => {
     $.ajax({
       method: "get",
@@ -29,21 +30,11 @@ const getPost = (postId) => {
         $("#loading").hide();
         $("#content").show();
         resolve(data);
-
       })
       .fail((err) => reject(err));
   });
 };
-getPost(myParam)
-  .then((response) => {
-    postTitle.html(response.title);
-    postBody.html(response.body);
-    postDetail.html(response.author + ",");
-    postDetailTime.html(response.lastModifiedAt);
-  })
-  .catch((err) => {
-    console.log(err);
-  });
+
 
 //GET AUTHOR
 function getProfile() {
@@ -53,6 +44,8 @@ function getProfile() {
       url: apiHost + "user",
     })
       .done(function (datas) {
+        users = datas
+        
         resolve(datas);
       })
       .fail(function (err) {
@@ -62,26 +55,70 @@ function getProfile() {
     $("select").change(function () {
       var val = $(this).val();
       authorId = val;
-      console.log(" authorId", authorId);
+
       var valtext = $("select option:selected").text();
       authorText = valtext;
-      console.log(" authorText", authorText)
+
     });
   });
 }
 
 
-getProfile()
-  .then(function (response) {
+
+Promise.all([getPost(myParam), getProfile(), getComments()])
+
+  //  reponse get profile
+  .then((response) => {
+    users = response[1];
+   
     var result = "";
-    response.forEach((item, idx) => {
+    response[1].forEach((item, idx) => {
       result += `
-        <option value=${item.id} id=${item.id}>${item.username}</option>
-   `;
+          <option value=${item.id} id=${item.id}>${item.username}</option>
+      `;
     });
     $("#author").append(result);
+
+    // response getPost
+
+    postTitle.html(response[0].title);
+    postBody.html(response[0].body);
+    postDetail.html(
+      users.find((val) => val.id == response[0].authorId).username + ","
+    );
+    postDetailTime.html(response[0].lastModifiedAt);
+
+
+
+    //function get comments
+    var result = response[2]
+      .map((item) => {
+         avatar = users
+          .find((val) => val.id == item.userId)
+          .username.slice(0, 2);
+
+        var randomColor = Math.floor(Math.random() * 16777215).toString(16);
+        return ( ` <div class="my-4">
+          <div class="flex gap-2 items-center">
+              <span class="rounded-full flex items-center justify-center  h-14 w-14 bg-[#${randomColor}] text-white font-semibold" id="thumbnailComment">${avatar}</span>
+
+          <div class="flex gap-2">
+                  <span id="commentAuthor" class="font-bold text-xl">${
+                    users.find((val) => val.id == item.userId).username
+                  }</span>
+                  <span id="commentAuthorTime" class="font-bold text-xl">${
+                    item.createdAt
+                  }</span>
+              </div>
+          </div>
+          <p id="commentBody" class="font-medium">${item.message}</p>
+        </div> `);
+      })
+      .join(" ");
+
+    $("#commentUser").append(result);
   })
-  .catch(function (error) {
+  .catch((error) => {
     console.log(error);
   });
 
@@ -90,11 +127,10 @@ getProfile()
 function getComments() {
   return new Promise((resolve, reject) => {
     $.ajax({
-      dataType: 'json',
-      url: apiHost + "comments?postId="+myParam,
+      dataType: "json",
+      url: apiHost + "comments?postId=" + myParam,
     })
       .done((data) => {
-        console.log({data});
         resolve(data);
       })
       .fail((err) => {
@@ -103,49 +139,9 @@ function getComments() {
   });
 }
 
-getComments().then((response)=>{
-  console.log({response});
- 
-  var result = "";
-  response.map((item)=>{
-    var avatar = item.userId.slice(0,2)
-    var randomColor = Math.floor(Math.random()*16777215).toString(16);
-    return result += ` <div class="my-4">
-      <div class="flex gap-2 items-center">
-          <span class="rounded-full flex items-center justify-center  h-14 w-14 bg-[#${randomColor}] text-white font-semibold" id="thumbnailComment">${avatar}</span>
-
-      <div class="flex gap-2">
-              <span id="commentAuthor" class="font-bold text-xl">${item.userId}</span>
-              <span id="commentAuthorTime" class="font-bold text-xl">${item.createdAt}</span>
-          </div>
-      </div>
-      <p id="commentBody" class="font-medium">${item.message}</p>
-    </div> `
-    // return result +=`
-    //   <div class="my-4">
-    //     <div class="flex gap-2 items-center">
-       
-    //       <span class="rounded-full flex items-center justify-center  h-14 w-14 bg-blue-900 text-white font-semibold" id="thumbnailComment">${item.author.slice(0,2)}</span>
-      
-    //       <div class="flex gap-2">
-    //           <span id="commentAuthor" class="font-bold text-xl">${item.userId}</span>
-    //           <span id="commentAuthorTime" class="font-bold text-xl">${item.createdAt}</span>
-    //       </div>
-    //     </div>
-    //     <p id="commentBody" class="font-medium">${item.message}</p>
-    //   </div>
-    //   `
-    }).join(' ');
-
-
-  $('#commentUser').append(result);
-
-}).catch((err)=>{
-  console.log(err);
-})
 
 //Create Comments
-let messageComment = $('#messageComment')
+let messageComment = $("#messageComment");
 let date = new Date();
 let day = date.getDate();
 let month = date.getMonth() + 1;
@@ -154,27 +150,35 @@ let hour = date.getHours();
 let minute = date.getMinutes();
 let second = date.getSeconds();
 let currentDate = `${day}/${month}/${year} ${hour}:${minute}:${second}`;
+console.log($("#submitComment"));
 
-$('#submitComment').click(function() {
-  return new Promise((resolve, reject)=>{
+$("#submitComment").click(function () {
+  var getIdUser = $('select').val();
+  var valtext = $("select option:selected").text();
+
+
+  return new Promise((resolve, reject) => {
     $.ajax({
-      url: apiHost + 'comments',
-      type: 'post',
-      contentType: 'application/json',
+      url: apiHost + "comments",
+      type: "post",
+      contentType: "application/json",
       data: JSON.stringify({
-        postId:myParam,
-        userId:authorText,
-        message:messageComment.val(),
-        createdAt:currentDate,
-      })
-    }).done(function (data) {
-      alert('berhasil menambahkan komen')
-      resolve({data})
-      location.reload()
-    }).fail(function(err) {
-      reject(err)
-      alert('gagal menambahkan komen')
-      location.reload()
+        postId: myParam,
+        userId: parseInt(getIdUser),
+        message: messageComment.val(),
+        avatar: valtext.slice(0,2),
+        createdAt: currentDate,
+      }),
     })
-  })
-})
+      .done(function (data) {
+        alert("berhasil menambahkan komen");
+        resolve({ data });
+        location.reload();
+      })
+      .fail(function (err) {
+        reject(err);
+        alert("gagal menambahkan komen");
+        location.reload();
+      });
+  });
+});

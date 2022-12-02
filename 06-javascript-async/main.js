@@ -24,6 +24,8 @@ var authorText = "Izrail";
 var current_page = 1;
 var records_per_page = 10;
 
+var getUser;
+
 function prevPage() {
   if (current_page > 1) {
     current_page--;
@@ -38,22 +40,20 @@ function nextPage() {
   }
 }
 
-//get data
-function loadData() {
-  $("#dataTable").hide();
+Promise.all([getProfile(), getPost()]).then(res=>{
+ //get post
+ $("#dataTable").hide();
   $("#loading").show();
-  $.ajax({
-    dataType: "json",
-    url: apiHost + "posts",
-    success: function (datas) {
-      $("#dataTable").show();
-       $("#loading").hide();
-      var result = "";
-      posts = datas;
-      datas.forEach((item, idx) => {
-        result += `
   
-          < id="dataTable">
+  $("#dataTable").show();
+      $("#loading").hide();
+
+      var result = res[1].map((item, idx) => {
+      
+        var username = res[0].find((user) => {     
+          return user.id == item.authorId
+        }).username
+       return `< id="dataTable">
             <tr class="border border-slate-400 p-3">
             <td class="border border-slate-400 p-3" >${idx + 1}</td>
             <td id="${item.id}" class="goTodetail border border-slate-400 p-3" >
@@ -61,36 +61,55 @@ function loadData() {
               ${item.title}
               </a>
             </td>
-            <td class="border border-slate-400 p-3">${item.author}</td>
+            <td id="${item.id}" class="gotToUser border border-slate-400 p-3">           
+              ${username}           
+            </td>
             <td class="border border-slate-400 p-3">${item.createdAt}</td>
-            <td id="lastModifiedDetail" class=" border border-slate-400 p-3">${item.lastModifiedAt
+            <td id="lastModifiedDetail" class=" border border-slate-400 p-3">${
+              item.lastModifiedAt
             }</td>
-            <td class="border border-slate-400 p-3">${item.published}</td>
+            <td class="border text-center border-slate-400 p-3">${item.published ? '<i class="fa fa-lg-regular text-green-600 fa-circle-check"></i>' : '<i class="fa fa-lg-regular text-red-600 fa-circle-xmark"></i>' }  </td>
             <td class="border border-slate-400 p-3">
-            <span id="edit-${item.id
+            <span id="edit-${
+              item.id
             }" class="listItemEdit cursor-pointer text-white text-xs bg-green-700 hover:bg-green-800 p-1 rounded-md ">Edit</span>
-            <span id="delete-${item.id
+            <span id="delete-${
+              item.id
             }" class="listDeleteBtn cursor-pointer text-white text-xs bg-red-700 hover:bg-red-800 p-1 rounded-md ">Delete</span>
             </td>
             </tr>
           </>
-   `;
+          `
+   
       });
       $("table").append(result);
-    },
-    error: function (err) {
-      console.log(err);
-    },
+
+
+})
+
+function getPost() {
+  return new Promise((resolve, reject) => {
+    $.ajax({
+      dataType: "json",
+      url: apiHost + "posts",
+    })
+      .done(function (datas) {
+        posts = datas
+        resolve(datas);
+      })
+      .fail(function (err) {
+        reject(err);
+      });
   });
 }
-loadData();
+
 
 //get author
 function getProfile() {
   return new Promise((resolve, reject) => {
     $.ajax({
       dataType: "json",
-      url: apiHost + "profile",
+      url: apiHost + "user",
     })
       .done(function (datas) {
         resolve(datas);
@@ -148,7 +167,6 @@ $(`#submitBtn`).click(function () {
       }),
     })
       .done(function (data) {
-        console.log({ data });
         alert("Berhasil Update");
         resolve("Create post berhasil");
         location.reload();
@@ -161,6 +179,7 @@ $(`#submitBtn`).click(function () {
 
 //edit
 $("table").on("click", ".listItemEdit", function () {
+
   var _this = $(this);
   $("#modal").show();
   var idAttr = $(this).attr("id").split("-")[1];
@@ -179,7 +198,6 @@ $("table").on("click", ".listItemEdit", function () {
 
 //update
 $(`#editBtn`).click(function () {
-  console.log(postId);
   return new Promise((resolve, reject) => {
     const date = new Date();
 
@@ -202,7 +220,6 @@ $(`#editBtn`).click(function () {
       }),
     })
       .done(function (data) {
-        console.log({ data });
         alert("Berhasil Update");
         resolve("update berhasil");
         location.reload();
