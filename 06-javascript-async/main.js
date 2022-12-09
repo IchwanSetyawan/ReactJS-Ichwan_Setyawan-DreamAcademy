@@ -7,6 +7,10 @@ $("#closeModal").click(function () {
   $("#modal").hide();
 });
 
+$("#closeModalEdit").click(function () {
+  $("#modalEdit").hide();
+});
+
 var apiHost = "http://localhost:3000/";
 
 var posts;
@@ -52,10 +56,10 @@ Promise.all([getProfile(), getPost()]).then(res=>{
       
         var username = res[0].find((user) => {     
           return user.id == item.authorId
-        }).username
+        })?.username
        return `< id="dataTable">
             <tr class="border border-slate-400 p-3">
-            <td class="border border-slate-400 p-3" >${idx + 1}</td>
+            <td class="border border-slate-400 p-3" >${item.id}</td>
             <td id="${item.id}" class="goTodetail border border-slate-400 p-3" >
               <a href="/post/?id=${item.id}">
               ${item.title}
@@ -163,7 +167,7 @@ $(`#submitBtn`).click(function () {
         published: publishField.prop("checked"),
         createdAt: currentDate,
         lastModifiedAt: currentDate,
-        author: authorText,
+        authorId: authorId,
       }),
     })
       .done(function (data) {
@@ -179,9 +183,8 @@ $(`#submitBtn`).click(function () {
 
 //edit
 $("table").on("click", ".listItemEdit", function () {
-
   var _this = $(this);
-  $("#modal").show();
+  $("#modalEdit").show();
   var idAttr = $(this).attr("id").split("-")[1];
   postId = idAttr;
 
@@ -189,15 +192,16 @@ $("table").on("click", ".listItemEdit", function () {
     return val.id == postId;
   });
 
-  $("#myTitle").val(thePost.title);
-  $("#myBody").val(thePost.body);
-  $("#publishCheck").prop("checked", thePost.published);
+  $("#myTitleEdit").val(thePost.title);
+  $("#myBodyEdit").val(thePost.body);
+  $("#publishCheckEdit").prop("checked", thePost.published);
 
-  $("#postId").html(thePost.id);
+  $("#postIdEdit").html(thePost.id);
 });
 
 //update
 $(`#editBtn`).click(function () {
+  console.log('berhasil');
   return new Promise((resolve, reject) => {
     const date = new Date();
 
@@ -213,9 +217,9 @@ $(`#editBtn`).click(function () {
       method: "patch",
       contentType: "application/json",
       data: JSON.stringify({
-        title: titleField.val(),
-        body: bodyField.val(),
-        published: publishField.prop("checked"),
+        title:  $("#myTitleEdit").val(),
+        body: $("#myBodyEdit").val(),
+        published: $("#publishCheckEdit").prop("checked"),
         lastModifiedAt: currentDate,
       }),
     })
