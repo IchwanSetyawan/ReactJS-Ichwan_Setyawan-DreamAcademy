@@ -6,6 +6,9 @@
 $("#closeModal").click(function () {
   $("#modal").hide();
 });
+$("#closeModalEdit").click(function () {
+  $("#modalEdit").hide();
+});
 
 var apiHost = "http://localhost:3000/";
 
@@ -25,6 +28,7 @@ var current_page = 1;
 var records_per_page = 10;
 
 var getUser;
+var myParamComment;
 
 function prevPage() {
   if (current_page > 1) {
@@ -94,7 +98,6 @@ getProfile()
 
 // post data
 $(`#submitBtn`).click(function () {
-  console.log("berhasil");
   return new Promise((resolve, reject) => {
     const date = new Date();
 
@@ -120,7 +123,7 @@ $(`#submitBtn`).click(function () {
       }),
     })
       .done(function (data) {
-        alert("Berhasil Update");
+        alert("Berhasil tambah data");
         resolve("Create post berhasil");
         $("#modal").hide();
         getContainer();
@@ -131,6 +134,7 @@ $(`#submitBtn`).click(function () {
   });
 });
 
+// tampilkan add modal 
 $("#container").on("click", "#addNew", function () {
   $("#modal").show();
 });
@@ -138,7 +142,7 @@ $("#container").on("click", "#addNew", function () {
 //edit
 $("#container").on("click", ".listItemEdit", function () {
   var _this = $(this);
-  $("#modal").show();
+  $("#modalEdit").show();
   var idAttr = $(this).attr("id").split("-")[1];
   postId = idAttr;
 
@@ -146,11 +150,11 @@ $("#container").on("click", ".listItemEdit", function () {
     return val.id == postId;
   });
 
-  $("#myTitle").val(thePost.title);
-  $("#myBody").val(thePost.body);
-  $("#publishCheck").prop("checked", thePost.published);
+  $("#myTitleEdit").val(thePost.title);
+  $("#myBodyEdit").val(thePost.body);
+  $("#publishCheckEdit").prop("checked", thePost.published);
 
-  $("#postId").html(thePost.id);
+  $("#postIdEdit").html(thePost.id);
 });
 
 //update
@@ -170,16 +174,16 @@ $(`#editBtn`).click(function () {
       method: "patch",
       contentType: "application/json",
       data: JSON.stringify({
-        title: titleField.val(),
-        body: bodyField.val(),
-        published: publishField.prop("checked"),
+        title: $("#myTitleEdit").val(),
+        body:  $("#myBodyEdit").val(),
+        published: $("#publishCheckEdit").prop("checked"),
         lastModifiedAt: currentDate,
       }),
     })
       .done(function (data) {
         alert("Berhasil Update");
         resolve("update berhasil");
-        $("#modal").hide();
+        $("#modalEdit").hide();
         getContainer();
       })
       .fail(() => {
@@ -258,7 +262,7 @@ function showDetail(idPost) {
     <h2 class="text-3xl font-bold mt-16 mb-8">Say Something</h2>
     <div>
         <textarea id="messageComment" rows="4"
-            class="block h-64 p-2.5 w-full text-xl font-semibold text-gray-900 bg-gray-50 rounded-lg border-black border-2"
+            class="block h-64 p-2 w-full text-xl font-semibold text-gray-900 bg-gray-50 rounded-lg border-black border-2"
             placeholder="Write your thoughts here...">
         </textarea>
     </div>
@@ -271,7 +275,6 @@ function showDetail(idPost) {
 `);
   
   let postTitle = $(`#postTitleDetail`);
-  console.log("🚀 ~ file: main.js:256 ~ showDetail ~ postTitle", postTitle)
   const postBody = $(`#postBody`);
   const postDetail = $(`#postDetail`);
   const postDetailTime = $(`#postDetailTime`);
@@ -287,10 +290,11 @@ function showDetail(idPost) {
 
 Promise.all([getPost(idPost), getProfile(), getComments(idPost)])
 
-  //  reponse get profile
-  .then((response) => {
-    users = response[1];
-
+//  reponse get profile
+.then((response) => {
+  users = response[1];
+ 
+    console.log(" myParamComment", myParamComment)
     // response getPost
     postTitle.html(response[0].title);
     postBody.html(response[0].body);
@@ -300,7 +304,6 @@ Promise.all([getPost(idPost), getProfile(), getComments(idPost)])
     postDetailTime.html(response[0].lastModifiedAt);
 
     //function get comments
-    console.log("response[2]", response[2])
     var result = response[2]
       .map((item) => {
         avatar = users
@@ -328,64 +331,62 @@ Promise.all([getPost(idPost), getProfile(), getComments(idPost)])
 
     $("#commentUser").html(result);
 
+    //createComment
+    $("#container").on("click", "#submitComment", function (e) {
+      myParamComment = response[0].id
+      var getIdUser = $('select').val();
+      var valtext = $("select option:selected").text();
+      let messageComment = $("#messageComment");
+      let date = new Date();
+      let day = date.getDate();
+      let month = date.getMonth() + 1;
+      let year = date.getFullYear();
+      let hour = date.getHours();
+      let minute = date.getMinutes();
+      let second = date.getSeconds();
+      let currentDate = `${day}/${month}/${year} ${hour}:${minute}:${second}`;
+    
+      return new Promise((resolve, reject) => {
+        $.ajax({
+          url: apiHost + "comments",
+          type: "post",   
+          contentType: "application/json",
+          data: JSON.stringify({
+            postId: myParamComment,
+            userId: parseInt(getIdUser),
+            message: messageComment.val(),
+            avatar: valtext.slice(0,2),
+            createdAt: currentDate,
+          }),
+        })
+          .done(function (data) {
+            alert("berhasil menambahkan komen");
+            resolve({ data });
+            showDetail(myParamComment)
+    
+          })
+          .fail(function (err) {
+            reject(err);
+            alert("gagal menambahkan komen");
+          });
+      });
+    });
   })
   .catch((error) => {
     console.log(error);
   });
 }
+
 // create comment
-$("#container").on("click", "#submitComment", function (e) {
-  var getIdUser = $('select').val();
-  var valtext = $("select option:selected").text();
-
-  //Create Comments
-  let messageComment = $("#messageComment");
-  let date = new Date();
-  let day = date.getDate();
-  let month = date.getMonth() + 1;
-  let year = date.getFullYear();
-  let hour = date.getHours();
-  let minute = date.getMinutes();
-  let second = date.getSeconds();
-  let currentDate = `${day}/${month}/${year} ${hour}:${minute}:${second}`;
-  console.log($("#submitComment"));
 
 
-  return new Promise((resolve, reject) => {
-    $.ajax({
-      url: apiHost + "comments",
-      type: "post",   
-      contentType: "application/json",
-      data: JSON.stringify({
-        postId: 1,
-        userId: parseInt(getIdUser),
-        message: messageComment.val(),
-        avatar: valtext.slice(0,2),
-        createdAt: currentDate,
-      }),
-    })
-      .done(function (data) {
-        alert("berhasil menambahkan komen");
-        resolve({ data });
-        showDetail(1)
-
-      })
-      .fail(function (err) {
-        reject(err);
-        alert("gagal menambahkan komen");
-      });
-  });
-});
 
 //title detail
 $("#container").on("click", ".detailPost", function (e) {
   var idPost = e.target.id.split("-")[1];
   showDetail(idPost);
   history.pushState({page:'detail-post', idPost},'detailPost',`/detail?postId=${idPost}`)
-  console.log({idPost});
 });
-
-
 
 // pagination
 $(document).ready(function () {
@@ -461,7 +462,7 @@ function getContainer() {
       })?.username;
       return `< id="dataTable">
               <tr class="border border-slate-400 p-3">
-              <td class="border border-slate-400 p-3" >${idx + 1}</td>
+              <td class="border border-slate-400 p-3" >${item.id}</td>
               <td id="${
                 item.id
               }" class="goTodetail border border-slate-400 p-3" >

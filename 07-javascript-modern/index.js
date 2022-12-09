@@ -4,7 +4,6 @@ var urlParams = new URLSearchParams(window.location.search);
 var myParam = urlParams.get("id");
 var authorId = "1";
 var authorText = "Izrail";
-
 var users;
 
 const getPost = (postId) => {
@@ -45,10 +44,8 @@ function getProfile() {
     $("select").change(function () {
       var val = $(this).val();
       authorId = val;
-
       var valtext = $("select option:selected").text();
       authorText = valtext;
-
     });
   });
 }
@@ -68,7 +65,6 @@ function getComments(postId) {
       });
   });
 }
-
 
 
 
