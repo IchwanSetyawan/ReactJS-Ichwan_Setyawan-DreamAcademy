@@ -1,15 +1,3 @@
-//show modal
-// $("#container").click(function () {
-//   $("#modal").show();
-// });
-//hide modal
-$("#closeModal").click(function () {
-  $("#modal").hide();
-});
-$("#closeModalEdit").click(function () {
-  $("#modalEdit").hide();
-});
-
 var apiHost = "http://localhost:3000/";
 
 var posts;
@@ -29,6 +17,16 @@ var records_per_page = 10;
 
 var getUser;
 var myParamComment;
+let nowDate = moment().format("DD-MM-YYYY");
+let nowTime = moment().format("HH:mm:ss");
+
+$("#closeModal").click(function () {
+  $("#modal").hide();
+});
+$("#closeModalEdit").click(function () {
+  $("#modalEdit").hide();
+});
+
 
 function prevPage() {
   if (current_page > 1) {
@@ -99,16 +97,7 @@ getProfile()
 // post data
 $(`#submitBtn`).click(function () {
   return new Promise((resolve, reject) => {
-    const date = new Date();
-
-    let day = date.getDate();
-    let month = date.getMonth() + 1;
-    let year = date.getFullYear();
-    let hour = date.getHours();
-    let minute = date.getMinutes();
-    let second = date.getSeconds();
-    let currentDate = `${day}/${month}/${year} ${hour}:${minute}:${second}`;
-
+    let currentDate = `${nowDate} ${nowTime}`
     $.ajax({
       url: apiHost + "posts",
       type: "post",
@@ -157,18 +146,12 @@ $("#container").on("click", ".listItemEdit", function () {
   $("#postIdEdit").html(thePost.id);
 });
 
+
 //update
 $(`#editBtn`).click(function () {
   return new Promise((resolve, reject) => {
-    const date = new Date();
 
-    let day = date.getDate();
-    let month = date.getMonth() + 1;
-    let year = date.getFullYear();
-    let hour = date.getHours();
-    let minute = date.getMinutes();
-    let second = date.getSeconds();
-    let currentDate = `${day}/${month}/${year} ${hour}:${minute}:${second}`;
+    let currentDate = `${nowDate} ${nowTime}`
     $.ajax({
       url: apiHost + "posts/" + postId,
       method: "patch",
